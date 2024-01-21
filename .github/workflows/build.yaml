@@ -2,7 +2,8 @@ name: Build DevContainer
 
 on:
   push:
-    - experimental
+    branches:
+      - experimental
 
 permissions:
   contents: read
