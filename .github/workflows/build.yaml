@@ -1,10 +1,5 @@
 name: Build DevContainer
 
-on:
-  push:
-    branches:
-      - experimental
-
 permissions:
   contents: read
   packages: write
@@ -27,6 +22,6 @@ jobs:
       - name: Build artifacts
         uses: devcontainers/ci@v0.3
         with:
-          imageName: ghcr.io/kyori19/devcontainers/images/satysfi-notebook:experimental
-          cacheFrom: ghcr.io/kyori19/devcontainers/images/satysfi-notebook:experimental
+          imageName: ghcr.io/kyori19/devcontainers/images/satysfi-notebook
+          cacheFrom: ghcr.io/kyori19/devcontainers/images/satysfi-notebook
           push: always

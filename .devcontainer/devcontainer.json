@@ -2,6 +2,6 @@
   "build": {
     "dockerfile": "Dockerfile",
     "context": "..",
-    "cacheFrom": "ghcr.io/kyori19/devcontainers/images/satysfi-notebook:experimental"
+    "cacheFrom": "ghcr.io/kyori19/devcontainers/images/satysfi-notebook"
   }
 }
