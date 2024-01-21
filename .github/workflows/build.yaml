@@ -1,0 +1,31 @@
+name: Build DevContainer
+
+on:
+  push:
+    - experimental
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build artifacts
+        uses: devcontainers/ci@v0.3
+        with:
+          imageName: ghcr.io/kyori19/devcontainers/images/satysfi-notebook:experimental
+          cacheFrom: ghcr.io/kyori19/devcontainers/images/satysfi-notebook:experimental
+          push: always

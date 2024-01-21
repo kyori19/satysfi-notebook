@@ -1,6 +1,7 @@
 {
-  "image": "mcr.microsoft.com/vscode/devcontainers/base",
-  "features": {
-    "ghcr.io/devcontainers/features/docker-in-docker": {}
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "..",
+    "cacheFrom": "ghcr.io/kyori19/devcontainers/images/satysfi-notebook:experimental"
   }
 }
