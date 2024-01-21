@@ -1,1 +1,1 @@
-# satysfi-notebook
+# satysfi-notebook (experimental)
