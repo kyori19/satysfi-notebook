@@ -3,7 +3,7 @@
   "argv": [
       "satysfi",
       "build",
-      "workspace.satyw",
+      "/home/vscode/.local/share/jupyter/kernels/satysfi-slydifi/workspace.satyw",
       "--jupyter-connection-file",
       "{connection_file}"
   ],
