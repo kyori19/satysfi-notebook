@@ -30,6 +30,7 @@ SCRIPT
 FROM mcr.microsoft.com/vscode/devcontainers/base:bookworm
 
 COPY sid /etc/apt/preferences.d/sid
+COPY satysfi-slydifi /home/vscode/.local/share/jupyter/kernels/
 
 RUN <<SCRIPT
 sudo sed -i -e 's/bookworm-updates/\0 sid/' /etc/apt/sources.list.d/debian.sources
@@ -42,10 +43,20 @@ sudo apt-get install -yt unstable libxeus-zmq2
 
 sudo apt-get clean
 sudo rm -rf /var/lib/apt/lists/*
+
+git clone https://github.com/kyori19/slydifi.git \
+  /home/vscode/.local/share/jupyter/kernels/satysfi-slydifi/slydifi \
+  -b v0.1.0-package --depth 1
+git clone https://github.com/pickoba/satysfi-figbox.git \
+  /home/vscode/.local/share/jupyter/kernels/satysfi-slydifi/figbox \
+  -b dev-0-1-0-package-system --depth 1
 SCRIPT
 
 COPY --from=build /home/opam/.opam/4.14/bin/satysfi /usr/local/bin/
 COPY --from=build --chown=vscode:vscode /home/opam/satysfi/.satysfi /home/vscode/.satysfi
 COPY --from=build /home/opam/satysfi/libsatysfi-jupyter-ext.so /usr/local/lib/
 
-RUN sudo ldconfig
+RUN <<SCRIPT
+sudo ldconfig
+satysfi solve /home/vscode/.local/share/jupyter/kernels/satysfi-slydifi/workspace.satyw
+SCRIPT
