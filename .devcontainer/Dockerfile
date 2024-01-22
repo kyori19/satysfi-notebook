@@ -29,6 +29,8 @@ SCRIPT
 
 FROM mcr.microsoft.com/vscode/devcontainers/base:bookworm
 
+USER vscode
+
 COPY sid /etc/apt/preferences.d/sid
 COPY satysfi-slydifi /home/vscode/.local/share/jupyter/kernels/satysfi-slydifi
 
