@@ -58,6 +58,5 @@ COPY --from=build /home/opam/satysfi/libsatysfi-jupyter-ext.so /usr/local/lib/
 
 RUN <<SCRIPT
 sudo ldconfig
+satysfi solve /home/vscode/.local/share/jupyter/kernels/satysfi-slydifi/workspace.satyw
 SCRIPT
-#satysfi solve /home/vscode/.local/share/jupyter/kernels/satysfi-slydifi/workspace.satyw
-#SCRIPT
