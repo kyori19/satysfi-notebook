@@ -32,7 +32,7 @@ FROM mcr.microsoft.com/vscode/devcontainers/base:bookworm
 USER vscode
 
 COPY sid /etc/apt/preferences.d/sid
-COPY satysfi-slydifi /home/vscode/.local/share/jupyter/kernels/satysfi-slydifi
+COPY --chown=vscode:vscode satysfi-slydifi /home/vscode/.local/share/jupyter/kernels/satysfi-slydifi
 
 RUN <<SCRIPT
 sudo sed -i -e 's/bookworm-updates/\0 sid/' /etc/apt/sources.list.d/debian.sources
