@@ -30,7 +30,7 @@ SCRIPT
 FROM mcr.microsoft.com/vscode/devcontainers/base:bookworm
 
 COPY sid /etc/apt/preferences.d/sid
-COPY satysfi-slydifi /home/vscode/.local/share/jupyter/kernels/
+COPY satysfi-slydifi /home/vscode/.local/share/jupyter/kernels/satysfi-slydifi
 
 RUN <<SCRIPT
 sudo sed -i -e 's/bookworm-updates/\0 sid/' /etc/apt/sources.list.d/debian.sources
@@ -58,5 +58,6 @@ COPY --from=build /home/opam/satysfi/libsatysfi-jupyter-ext.so /usr/local/lib/
 
 RUN <<SCRIPT
 sudo ldconfig
-satysfi solve /home/vscode/.local/share/jupyter/kernels/satysfi-slydifi/workspace.satyw
 SCRIPT
+#satysfi solve /home/vscode/.local/share/jupyter/kernels/satysfi-slydifi/workspace.satyw
+#SCRIPT
