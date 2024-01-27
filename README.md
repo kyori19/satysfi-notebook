@@ -29,7 +29,7 @@ In the container, run:
 ```sh
 sudo apt update
 sudo apt install python3-pip
-sudo pip3 install jupyterlab --break-system-packages
+sudo pip3 install jupyterlab satysfi_notebook_tweaks --break-system-packages
 ```
 
 Then you can run `jupyter lab` or open GitHub Codespaces using JupyterLab.
