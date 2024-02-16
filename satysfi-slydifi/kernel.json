@@ -1,0 +1,11 @@
+{
+  "display_name": "SATySFi Kernel (SLyDIFi)",
+  "argv": [
+      "satysfi",
+      "build",
+      "/home/user/workspace.satyw",
+      "--jupyter-connection-file",
+      "{connection_file}"
+  ],
+  "language": "SATySFi"
+}

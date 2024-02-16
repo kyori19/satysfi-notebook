@@ -1,0 +1,22 @@
+#[config (|
+  registries = [
+    (|
+      name = `default`,
+      remote = Git (|
+        url = `https://github.com/kyori19/satysfi-registry`,
+        branch = `master`,
+      |),
+    |)
+  ],
+  dependencies = [
+    (| name = `code`, registry = `default`, requirement = `^0.0.1` |),
+    (| name = `font-ipa-ex`, registry = `default`, requirement = `^0.0.1` |),
+    (| name = `stdlib`, registry = `default`, requirement = `^0.0.1` |),
+  ],
+|)]
+use open Overlay.Cond of `./slydifi/src/overlay`
+use open Plain.DefaultClass of `./slydifi/src/theme/plain`
+use open FigBox of `./figbox/src/figbox`
+use package open Stdlib.Pervasives
+
+document
