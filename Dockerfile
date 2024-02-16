@@ -38,7 +38,8 @@ apt-get update
 apt-get install -y \
   libb64-0d \
   libpoppler-cpp0v5 \
-  python3-pip
+  python3-pip \
+  sudo
 apt-get install -yt unstable libxeus-zmq2
 
 apt-get clean
