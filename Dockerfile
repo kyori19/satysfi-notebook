@@ -51,7 +51,11 @@ pip3 install --break-system-packages --no-cache-dir \
   satysfi_notebook_tweaks
 SCRIPT
 
-RUN adduser --disabled-password --gecos '' --uid 1000 user sudo
+RUN <<SCRIPT
+adduser --disabled-password --gecos '' --uid 1000 --home /home/user user
+echo 'user ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/user
+SCRIPT
+
 USER user
 
 COPY --chown=user:user satysfi-slydifi /home/user/.local/share/jupyter/kernels/satysfi-slydifi
