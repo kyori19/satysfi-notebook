@@ -41,6 +41,7 @@ apt-get install -y \
   libpoppler-cpp0v5 \
   python3-pip \
   sudo \
+  unzip \
   wget
 apt-get install -yt unstable libxeus-zmq2
 
