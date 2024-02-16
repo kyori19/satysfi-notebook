@@ -62,22 +62,24 @@ SCRIPT
 USER user
 
 COPY --chown=user:user satysfi-slydifi /home/user/.local/share/jupyter/kernels/satysfi-slydifi
+COPY --chown=user:user workspace /home/user/workspace
 
 RUN <<SCRIPT
 git clone https://github.com/kyori19/slydifi.git \
-  /home/user/slydifi \
+  /home/user/workspace/slydifi \
   -b v0.1.0-package --depth 1
 git clone https://github.com/pickoba/satysfi-figbox.git \
-  /home/user/figbox \
+  /home/user/workspace/figbox \
   -b dev-0-1-0-package-system --depth 1
 SCRIPT
 
 COPY --from=build /home/opam/.opam/4.14/bin/satysfi /usr/local/bin/
 COPY --from=build --chown=user:user /home/opam/satysfi/.satysfi /home/user/.satysfi
 COPY --from=build /home/opam/satysfi/libsatysfi-jupyter-ext.so /usr/local/lib/
-COPY workspace.satyw /home/user/workspace.satyw
 
 RUN <<SCRIPT
 sudo ldconfig
-satysfi solve /home/user/workspace.satyw
+satysfi solve /home/user/workspace/workspace.satyw
 SCRIPT
+
+WORKDIR /home/user/

@@ -3,7 +3,7 @@
   "argv": [
       "satysfi",
       "build",
-      "/home/user/workspace.satyw",
+      "/home/user/workspace/workspace.satyw",
       "--jupyter-connection-file",
       "{connection_file}"
   ],

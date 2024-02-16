@@ -28,7 +28,7 @@ jobs:
       - name: Build Image
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: docker
           push: true
           tags: ghcr.io/kyori19/satysfi-notebook/binder:latest
           cache-from: type=gha
