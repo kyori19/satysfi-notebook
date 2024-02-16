@@ -1,6 +1,15 @@
-# satysfi-notebook (experimental)
+# SATySFi Notebook
 
 ## Usage
+
+### On Binder
+
+> [!WARNING]
+>
+> Any changes made on Binder will not be persisted.
+> You should try other options below if you want to write something.
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/kyori19/satysfi-notebook/binder?urlpath=lab)
 
 ### On VSCode or GitHub Codespaces
 
