@@ -36,6 +36,7 @@ sed -i -e 's/bookworm-updates/\0 sid/' /etc/apt/sources.list.d/debian.sources
 
 apt-get update
 apt-get install -y \
+  git \
   libb64-0d \
   libpoppler-cpp0v5 \
   python3-pip \
@@ -61,20 +62,12 @@ USER user
 COPY --chown=user:user satysfi-slydifi /home/user/.local/share/jupyter/kernels/satysfi-slydifi
 
 RUN <<SCRIPT
-sudo apt-get update
-sudo apt-get install -y git
-
 git clone https://github.com/kyori19/slydifi.git \
   /home/user/slydifi \
   -b v0.1.0-package --depth 1
 git clone https://github.com/pickoba/satysfi-figbox.git \
   /home/user/figbox \
   -b dev-0-1-0-package-system --depth 1
-
-sudo apt-get remove -y git
-sudo apt-get autoremove -y
-sudo apt-get clean
-sudo rm -rf /var/lib/apt/lists/*
 SCRIPT
 
 COPY --from=build /home/opam/.opam/4.14/bin/satysfi /usr/local/bin/
