@@ -1,0 +1,1 @@
+FROM ghcr.io/kyori19/satysfi-notebook/binder@sha256:fc685f2ad78479258663b1b5a99aecaa0c02684e1e4c6307e75c5e88635bf4c5
