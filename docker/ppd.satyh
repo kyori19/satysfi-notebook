@@ -1,0 +1,209 @@
+use package Code
+use package FontBizUDGothic
+use package FontLatinModernMath
+use package Stdlib.Color
+use package Stdlib.Gr
+use package Stdlib.List
+use package Stdlib.Option
+use package open Stdlib.Pervasives
+use open Slydifi of `../slydifi`
+
+module PPD = struct
+
+  module Color = struct
+    val bg = Color.white
+    val fg = Color.black
+    val fg-secondary = Color.gray 0.46
+    val accent = Color.rgb 1. 0. 0.
+
+    val title = fg
+    val author = fg
+    val frame-title = fg
+    val footer = fg-secondary
+  end
+
+  module Font = struct
+    val regular ctx =
+      let font =
+        (FontBizUDGothic.regular, 1.0, 0.0)
+      in
+      ctx |> set-font Latin font
+          |> set-font Kana font
+          |> set-font HanIdeographic font
+          |> set-font OtherScript font
+
+    val bold ctx =
+      let font =
+        (FontBizUDGothic.bold, 1.0, 0.0)
+      in
+      ctx |> set-font Latin font
+          |> set-font Kana font
+          |> set-font HanIdeographic font
+          |> set-font OtherScript font
+
+    val main ctx = ctx
+      |> regular
+      |> set-text-color Color.fg
+      |> set-font-size 28pt
+
+    val title ctx = ctx
+      |> regular
+      |> set-text-color Color.title
+      |> set-font-size 36pt
+
+    val author ctx = ctx
+      |> regular
+      |> set-text-color Color.author
+      |> set-font-size 24pt
+
+    val frame-title ctx = ctx
+      |> regular
+      |> set-text-color Color.frame-title
+      |> set-font-size 40pt
+
+    val footer ctx = ctx
+      |> regular
+      |> set-text-color Color.footer
+      |> set-font-size 12pt
+  end
+
+  module Class = struct
+    module Template = struct
+      type title-content = (|
+        title : list inline-text,
+        author : list inline-text,
+      |)
+
+      val layout = (|
+        paper-width = 33.87cm,
+        paper-height = 19.05cm,
+        text-width = 29cm,
+        text-height = 18.5cm,
+        text-horizontal-margin = (33.87cm -' 29cm) *' 0.5,
+        text-vertical-margin = 0pt,
+      |)
+
+      val init-ctxf ctx = ctx
+        |> Font.main
+        |> set-math-font FontLatinModernMath.main
+
+      val frame-element-master =
+        let gr-bg =
+          Gr.rectangle (0pt, 0pt) (layout#paper-width, layout#paper-height)
+            |> fill Color.bg
+        in
+        Frame.gr gr-bg
+
+      val frame-element-footer ctx =
+        let gr-pagenum =
+          let it-pagenum = !Slydifi.page-num |> arabic |> embed-string in
+          let ctx = ctx |> Font.footer in
+          let ib =
+            read-inline ctx { #it-pagenum; }
+          in
+          let (w, h, _) = get-natural-metrics ib in
+          let x = layout#paper-width -' layout#text-horizontal-margin -' w in
+          let y = h +' 0.5cm in
+          draw-text (x, y) ib
+        in
+        Frame.gr gr-pagenum
+
+      val frame-title ctx content =
+        let join-its ctx acc cur =
+          let ib-line = read-inline ctx cur in
+          let ib =
+            inline-fil ++ ib-line ++ inline-fil
+          in
+          let bb-line = line-break false false ctx ib in
+          acc +++ bb-line
+        in
+        let bb-title =
+          let ctx = ctx
+            |> Font.title
+            |> set-paragraph-margin 0pt 0pt
+          in
+          let bb-skip = block-skip 8.25cm in
+          List.fold-left (join-its ctx) bb-skip content#title
+        in
+        let bb-author =
+          let ctx = ctx |> Font.author in
+          let bb-skip = block-skip 1.25cm in
+          List.fold-left (join-its ctx) bb-skip content#author
+        in
+        ([frame-element-master], bb-title +++ bb-author, [])
+
+      val frame-normal ctx content =
+        let bb-skip = block-skip 2.25cm in
+        let bb-title =
+          let ctx = ctx
+            |> Font.frame-title
+            |> set-paragraph-margin 0pt 1.5cm
+          in
+          let ib-title = read-inline ctx content#title in
+          line-break false false ctx ib-title
+        in
+        let bb-body = read-block ctx content#body in
+        ([frame-element-master, frame-element-footer ctx], bb-skip +++ bb-title +++ bb-body, [])
+
+      val inline ctx \emph ?(cond = cond-opt) it =
+        let cond = cond-opt |> Option.from (fun _ -> true) in
+        let ctx =
+          let ctx-emph = ctx
+            |> Font.bold
+            |> set-text-color Color.accent
+          in
+          Overlay.Func.select-from-two cond ctx-emph ctx
+        in
+        read-inline ctx it
+    end
+
+    include Slydifi.Make Template
+    include Overlay.Cmd
+
+    val inline ctx \em color it =
+      let ctx = ctx
+        |> Font.bold
+        |> set-text-color color
+      in
+      read-inline ctx it
+
+    val mutable footnote-counter <- 0
+    val mutable footnote-ps <- (0, 0)
+    val mutable footnote-c <- 0
+
+    val inline ctx \footnote it-main it-note =
+      let count =
+        let (pp, pl) = !footnote-ps in
+        let cp = !Slydifi.page-num in
+        let cl = !Overlay.layer in
+        let _ =
+          if not (pp == cp) then
+            footnote-c <- !footnote-counter
+          else if not (pl == cl) then
+            footnote-counter <- !footnote-c
+          else
+            ()
+        in
+        let _ = footnote-ps <- (cp, cl) in
+        let _ = footnote-counter <- !footnote-counter + 1 in
+        !footnote-counter
+      in
+      let it-marker = count |> arabic |> embed-string in
+
+      let ib-main = read-inline ctx it-main in
+      let ctx-marker =
+        let size = get-font-size ctx in
+        let scale = 0.6 in
+        ctx |> set-font-size (size *' scale)
+            |> set-manual-rising (size *' (1. -. scale))
+      in
+      let ib-marker = read-inline ctx-marker it-marker in
+
+      let ctx-footer = ctx |> Font.footer in
+      let ib = read-inline ctx-footer { #it-marker; #it-note; } in
+      let bb = line-break true true ctx-footer ib in
+
+      no-break (ib-main ++ ib-marker ++ add-footnote bb)
+  end
+
+end

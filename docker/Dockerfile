@@ -71,11 +71,15 @@ git clone https://github.com/kyori19/slydifi.git \
 git clone https://github.com/pickoba/satysfi-figbox.git \
   /home/user/workspace/figbox \
   -b dev-0-1-0-package-system --depth 1
+
+mkdir -p /home/user/resources
+ln -sf /home/user/resources /home/user/workspace/resources
 SCRIPT
 
 COPY --from=build /home/opam/.opam/4.14/bin/satysfi /usr/local/bin/
 COPY --from=build --chown=user:user /home/opam/satysfi/.satysfi /home/user/.satysfi
 COPY --from=build /home/opam/satysfi/libsatysfi-jupyter-ext.so /usr/local/lib/
+COPY --chown=user:user ppd.satyh /home/user/workspace/slydifi/src/theme/
 
 RUN <<SCRIPT
 sudo ldconfig
