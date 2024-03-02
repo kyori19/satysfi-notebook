@@ -63,6 +63,7 @@ USER user
 
 COPY --chown=user:user satysfi-slydifi /home/user/.local/share/jupyter/kernels/satysfi-slydifi
 COPY --chown=user:user workspace /home/user/workspace
+COPY --chown=user:user demo.ipynb /home/user/
 
 RUN <<SCRIPT
 git clone https://github.com/kyori19/slydifi.git \
