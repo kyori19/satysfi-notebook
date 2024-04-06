@@ -1,0 +1,10 @@
+{
+  "image": "ghcr.io/kyori19/devcontainers/images/satysfi-notebook",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-toolsai.jupyter"
+      ]
+    }
+  }
+}
