@@ -3,6 +3,8 @@ FROM ocaml/opam:debian-12-ocaml-4.14 AS build
 COPY sid /etc/apt/preferences.d/sid
 
 RUN <<SCRIPT
+set -eux
+
 sudo sed -i -e 's/bookworm-updates/\0 sid/' /etc/apt/sources.list.d/debian.sources
 
 sudo apt-get update
@@ -15,13 +17,11 @@ sudo apt-get install -y \
   pkg-config
 sudo apt-get install -yt unstable xeus-zmq-dev
 
-git clone https://github.com/kyori19/satysfi.git -b workspace --depth 1
+git clone https://github.com/kyori19/satysfi.git -b notebook --depth 1
 cd satysfi
 
 opam repository add satysfi-external https://github.com/gfngfn/satysfi-external-repo.git
-opam pin satysfi .
-
-./install-libs.sh .satysfi
+opam pin add .
 
 cmake jupyter-ext
 make
@@ -35,6 +35,8 @@ COPY sid /etc/apt/preferences.d/sid
 COPY --chown=vscode:vscode satysfi-slydifi /home/vscode/.local/share/jupyter/kernels/satysfi-slydifi
 
 RUN <<SCRIPT
+set -eux
+
 sudo sed -i -e 's/bookworm-updates/\0 sid/' /etc/apt/sources.list.d/debian.sources
 
 sudo apt-get update
@@ -54,11 +56,12 @@ git clone https://github.com/pickoba/satysfi-figbox.git \
   -b dev-0-1-0-package-system --depth 1
 SCRIPT
 
-COPY --from=build /home/opam/.opam/4.14/bin/satysfi /usr/local/bin/
-COPY --from=build --chown=vscode:vscode /home/opam/satysfi/.satysfi /home/vscode/.satysfi
+COPY --from=build /home/opam/.opam/4.14/bin/saphe /home/opam/.opam/4.14/bin/satysfi /usr/local/bin/
 COPY --from=build /home/opam/satysfi/libsatysfi-jupyter-ext.so /usr/local/lib/
 
 RUN <<SCRIPT
+set -eux
+
 sudo ldconfig
-satysfi solve /home/vscode/.local/share/jupyter/kernels/satysfi-slydifi/workspace.satyw
+saphe solve /home/vscode/.local/share/jupyter/kernels/satysfi-slydifi/workspace.satyw
 SCRIPT

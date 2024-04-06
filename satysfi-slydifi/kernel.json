@@ -1,10 +1,10 @@
 {
   "display_name": "SATySFi Kernel (SLyDIFi)",
   "argv": [
-      "satysfi",
+      "saphe",
       "build",
       "/home/vscode/.local/share/jupyter/kernels/satysfi-slydifi/workspace.satyw",
-      "--jupyter-connection-file",
+      "-o",
       "{connection_file}"
   ],
   "language": "SATySFi"
