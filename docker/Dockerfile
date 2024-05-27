@@ -20,6 +20,7 @@ sudo rm -rf /var/lib/apt/lists/*
 
 sudo pip3 install --break-system-packages --no-cache-dir \
   jupyterlab \
+  jupyterlab-lsp \
   notebook
 SCRIPT
 
