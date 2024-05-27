@@ -28,8 +28,8 @@ opam install -y \
   satysfi-class-slydifi
 SCRIPT
 
-COPY --chown=user:user demo.ipynb /home/user/
+COPY --chown=opam:opam demo.ipynb /home/opam/
 
 COPY --from=build-lsp /satysfi-language-server/target/release/satysfi-language-server /usr/local/bin/satysfi-language-server
 
-WORKDIR /home/user/
+WORKDIR /home/opam/
