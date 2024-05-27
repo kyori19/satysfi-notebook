@@ -30,6 +30,6 @@ jobs:
         with:
           context: docker
           push: true
-          tags: ghcr.io/kyori19/satysfi-notebook/binder:latest
+          tags: ghcr.io/kyori19/satysfi-notebook/lsp:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
