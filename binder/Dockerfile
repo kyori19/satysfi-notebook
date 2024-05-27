@@ -1,1 +1,1 @@
-FROM ghcr.io/kyori19/satysfi-notebook/lsp:latest
+FROM ghcr.io/kyori19/satysfi-notebook/lsp@sha256:c45ddc65ab4a22ad7b39393a7fe077ce48e74c0d03df5f94420be4cdc55138f8
