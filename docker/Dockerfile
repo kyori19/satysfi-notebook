@@ -15,6 +15,10 @@ FROM kyori/satysfi:latest
 RUN <<SCRIPT
 sudo apt-get update
 sudo apt-get install -y \
+  libb64-0d \
+  libpoppler-cpp0v5 \
+  libsodium23 \
+  libzmq5 \
   python3-pip
 
 sudo apt-get clean
@@ -35,6 +39,7 @@ COPY --chown=opam:opam satysfi /home/opam/.local/share/jupyter/kernels/satysfi
 COPY --chown=opam:opam demo.ipynb /home/opam/
 
 COPY --from=build-lsp /satysfi-language-server/target/release/satysfi-language-server /usr/local/bin/satysfi-language-server
+COPY --from=kernel /lib/x86_64-linux-gnu/libxeus-zmq.so.2 /lib/x86_64-linux-gnu/libxeus.so.9 /lib/x86_64-linux-gnu/libstdc++.so.6 /lib/x86_64-linux-gnu/
 COPY --from=kernel --chown=opam:opam /usr/local/bin/satysfi /home/opam/.local/share/jupyter/kernels/satysfi/satysfi
 COPY --from=kernel --chown=opam:opam /home/user/.satysfi /home/opam/.satysfi/
 COPY --from=kernel /usr/local/lib/libsatysfi-jupyter-ext.so /usr/local/lib/
