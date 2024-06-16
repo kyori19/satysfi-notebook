@@ -12,13 +12,13 @@ let document _ =
   in
   let pagepartsf _ =
     (|
-      header-origin  = 0pt,
+      header-origin  = (0pt, 0pt),
       header-content = block-nil,
-      footer-origin  = 0pt,
+      footer-origin  = (0pt, 0pt),
       footer-content = block-nil,
     |)
   in
-  page-break PaperSize.a4 pagecontf pagepartsf block-nil
+  page-break (0pt, 0pt) pagecontf pagepartsf block-nil
 in
 
 document
