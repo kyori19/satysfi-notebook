@@ -1,0 +1,11 @@
+{
+  "display_name": "SATySFi Kernel",
+  "argv": [
+      "/home/opam/.local/share/jupyter/kernels/satysfi/satysfi",
+      "build",
+      "/home/opam/.local/share/jupyter/kernels/satysfi/workspace.satyw",
+      "--jupyter-connection-file",
+      "{connection_file}"
+  ],
+  "language": "SATySFi"
+}

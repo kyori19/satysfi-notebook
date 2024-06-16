@@ -1,0 +1,24 @@
+#[config (|
+  registries = [],
+  dependencies = [],
+|)]
+
+let document _ =
+  let pagecontf _ =
+    (|
+      text-origin = (0pt, 0pt),
+      text-height = 0pt,
+    |)
+  in
+  let pagepartsf _ =
+    (|
+      header-origin  = 0pt,
+      header-content = block-nil,
+      footer-origin  = 0pt,
+      footer-content = block-nil,
+    |)
+  in
+  page-break PaperSize.a4 pagecontf pagepartsf block-nil
+in
+
+document
