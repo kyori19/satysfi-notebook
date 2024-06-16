@@ -36,7 +36,7 @@ COPY --chown=opam:opam demo.ipynb /home/opam/
 
 COPY --from=build-lsp /satysfi-language-server/target/release/satysfi-language-server /usr/local/bin/satysfi-language-server
 COPY --from=kernel --chown=opam:opam /usr/local/bin/satysfi /home/opam/.local/share/jupyter/kernels/satysfi/satysfi
-COPY --from=kernel --chown=opam:opam /home/user/.satysfi/satysfi-library-root.yaml /home/opam/.satysfi/
+COPY --from=kernel --chown=opam:opam /home/user/.satysfi /home/opam/.satysfi/
 COPY --from=kernel /usr/local/lib/libsatysfi-jupyter-ext.so /usr/local/lib/
 
 RUN <<SCRIPT
