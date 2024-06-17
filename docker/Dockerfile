@@ -36,6 +36,7 @@ opam install -y \
 SCRIPT
 
 COPY --chown=opam:opam satysfi /home/opam/.local/share/jupyter/kernels/satysfi
+COPY --chown=opam:opam satysfi-language-server.json /home/opam/.local/etc/jupyter/jupyter_server_config.d/
 COPY --chown=opam:opam demo.ipynb /home/opam/
 
 COPY --from=build-lsp /satysfi-language-server/target/release/satysfi-language-server /usr/local/bin/satysfi-language-server
